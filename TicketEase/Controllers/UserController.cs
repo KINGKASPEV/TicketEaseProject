@@ -33,5 +33,18 @@ namespace TicketEase.Controllers
 
             return StatusCode(response.StatusCode, new { errors = response.Errors });
         }
+
+        [HttpGet("get-Users-By-Pagination")]
+        public async Task<IActionResult> GetUsersByPagination(int page, int perPage)
+        {
+            var response = await _userServices.GetUsersByPaginationAsync(page, perPage);
+
+            if (response.Succeeded)
+            {
+                return Ok(response.Data);
+            }
+
+            return StatusCode(response.StatusCode, new { errors = response.Errors });
+        }
     }
 }
