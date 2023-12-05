@@ -8,9 +8,9 @@ namespace TicketEase.Configurations
         {
             services.AddSwaggerGen(config =>
             {
-                config.SwaggerDoc("v1", new OpenApiInfo 
+                config.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Ticket Ease", 
+                    Title = "Ticket Ease",
                     Version = "v1",
                     Description = "Ticket-Ease is a web-based application that streamlines and optimizes the management of task projects"
                 });

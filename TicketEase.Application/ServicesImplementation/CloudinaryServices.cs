@@ -37,7 +37,7 @@ namespace TicketEase.Application.ServicesImplementation
 
             var uploadResult = await cloudinary.UploadAsync(upload);
 
-            
+
             // Save the updated entity to the database
             _repository.Update(entity);
 

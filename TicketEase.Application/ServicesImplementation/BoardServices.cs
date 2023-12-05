@@ -17,7 +17,7 @@ namespace TicketEase.Application.ServicesImplementation
         private readonly IMapper _mapper;
         private readonly ILogger<BoardServices> _logger;
 
-        public BoardServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<BoardServices> logger) 
+        public BoardServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<BoardServices> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -41,7 +41,7 @@ namespace TicketEase.Application.ServicesImplementation
                 var board = _mapper.Map<Board>(boardRequestDto);
                 _unitOfWork.BoardRepository.AddBoard(board);
                 _unitOfWork.SaveChanges();
-                
+
                 var responseDto = _mapper.Map<BoardResponseDto>(board);
                 response = new ApiResponse<BoardResponseDto>(true, $"Successfully added a board", 201, responseDto, new List<string>());
                 return response;
@@ -56,7 +56,7 @@ namespace TicketEase.Application.ServicesImplementation
             }
         }
 
-        
+
         public async Task<ApiResponse<GetBoardsDto>> GetAllBoardsAsync(int perPage, int page)
         {
             try
@@ -90,8 +90,8 @@ namespace TicketEase.Application.ServicesImplementation
                 return new ApiResponse<GetBoardsDto>(false, "Error occurred while getting all boards.", 500, null, new List<string> { ex.Message });
             }
         }
-        
-        
+
+
 
         public async Task<ApiResponse<BoardResponseDto>> GetBoardByIdAsync(string id)
         {

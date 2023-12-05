@@ -75,9 +75,6 @@ namespace TicketEase.Application.ServicesImplementation
             }
         }
 
-
-
-
         public ApiResponse<TicketResponseDto> EditTicket(string ticketId, UpdateTicketRequestDto updatedTicketDTO)
         {
             ApiResponse<TicketResponseDto> response;
@@ -208,3 +205,4 @@ namespace TicketEase.Application.ServicesImplementation
         }
     }
 }
+

@@ -14,11 +14,11 @@ namespace TicketEase.Configurations
                 options.SignIn.RequireConfirmedEmail = false;
                 options.Password.RequireDigit = false; //return this to true
                 options.Password.RequireNonAlphanumeric = false; //return this to true
-				options.Password.RequireUppercase = false; //return this to true
-				options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = false; //return this to true
+                options.Password.RequireLowercase = true;
                 options.Password.RequiredLength = 6;
             });
-           // builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), services);
+            // builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), services);
             builder.AddEntityFrameworkStores<TicketEaseDbContext>().AddDefaultTokenProviders();
 
 
@@ -27,5 +27,5 @@ namespace TicketEase.Configurations
             //	.AddDefaultTokenProviders();
 
         }
-	}
+    }
 }
