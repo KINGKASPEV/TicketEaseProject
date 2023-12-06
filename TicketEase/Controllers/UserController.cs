@@ -85,5 +85,18 @@ namespace TicketEase.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpGet("get-Users-By-ManagerId")]
+        public async Task<IActionResult> GetUsersByManagerIdAndPagination(string managerId, int page, int perPage)
+        {
+            var response = await _userServices.GetUsersByManagerIdAsync(managerId, page, perPage);
+
+            if (response.Succeeded)
+            {
+                return Ok(response.Data);
+            }
+
+            return StatusCode(response.StatusCode, new { errors = response.Errors });
+        }
     }
 }
