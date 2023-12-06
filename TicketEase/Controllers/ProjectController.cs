@@ -40,5 +40,34 @@ namespace TicketEase.Controllers
         {
             return Ok(_projectServices.DeleteAllProjects());
         }
+
+        [HttpDelete("DeleteProjectById")]
+        public async Task<IActionResult> DeleteProjectById(string id)
+        {
+            return Ok(await _projectServices.DeleteProjectAsync(id));
+        }
+
+        [HttpGet("Get_All_Projects_Paginated")]
+        public async Task<IActionResult> GetAllProjects([FromQuery] int page, [FromQuery] int perPage)
+        {
+            try
+            {
+                var result = await _projectServices.GetAllProjectAsync(page, perPage);
+
+                if (result.Succeeded)
+                {
+                    return Ok(result.Data);
+                }
+                else
+                {
+                    return StatusCode(result.StatusCode, new { result.Message, result.Errors });
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, new { Message = "Internal Server Error", Errors = new[] { ex.Message } });
+            }
+        }
     }
 }
