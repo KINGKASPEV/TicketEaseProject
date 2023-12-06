@@ -28,5 +28,7 @@ namespace TicketEase.Controllers
             return Ok(await _projectServices.UpdateProjectAsync(/*boardId, */projectId, projectUpdate));
         }
 
+        [HttpGet("{projectId}")]
+        public async Task<IActionResult> GetProjectById(string projectId) => Ok(await _projectServices.GetProjectByIdAsync(projectId));
     }
 }
