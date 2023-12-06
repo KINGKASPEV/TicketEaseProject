@@ -79,5 +79,38 @@ namespace TicketEase.Controllers
                 return StatusCode(500, $"An error occurred while processing the request{ex.Message}.");
             }
         }
+
+        [HttpGet("status-by-pagination/{status}")]
+        public async Task<IActionResult> GetTicketsByStatusWithPagination(Status status, int page, int pageSize)
+        {
+            try
+            {
+
+                if (page <= 0 || pageSize <= 0)
+                {
+                    return BadRequest("Invalid page or pageSize values.");
+                }
+
+                var result = await _ticketService.GetTicketsByStatusWithPagination(status, page, pageSize);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while processing the request{ex.Message}");
+            }
+        }
+        [HttpGet("All-tickets")]
+        public async Task<IActionResult> GetAllTickets()
+        {
+            try
+            {
+                var result = await _ticketService.GetAllTickets();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
+        }
     }
 }
