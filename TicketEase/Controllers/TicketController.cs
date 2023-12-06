@@ -54,5 +54,30 @@ namespace TicketEase.Controllers
 
             return Ok(result);
         }
+
+        [HttpDelete("{ticketId}")]
+        public async Task<ActionResult<ApiResponse<bool>>> DeleteTicketById(string ticketId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(ticketId))
+                {
+                    return BadRequest("Ticket ID is required.");
+                }
+
+                var response = await _ticketService.DeleteTicketByIdAsync(ticketId);
+
+                if (response.Succeeded)
+                {
+                    return Ok(response);
+                }
+
+                return NotFound(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while processing the request{ex.Message}.");
+            }
+        }
     }
 }
