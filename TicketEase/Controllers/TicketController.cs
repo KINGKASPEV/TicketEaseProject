@@ -38,5 +38,21 @@ namespace TicketEase.Controllers
             }
             return BadRequest(response);
         }
+
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetTicketsByUserId(string userId, int page, int perPage)
+        {
+            var result = await _ticketService.GetTicketByUserId(userId, page, perPage);
+
+            return Ok(result);
+        }
+
+        [HttpGet("project/{projectId}")]
+        public async Task<IActionResult> GetTicketsByProjectId(string projectId, int page, int perPage)
+        {
+            var result = await _ticketService.GetTicketByProjectId(projectId, page, perPage);
+
+            return Ok(result);
+        }
     }
 }
