@@ -27,5 +27,34 @@ namespace TicketEase.Controllers
         {
             return Ok(await _managerService.CreateManager(managerInfoCreateDto));
         }
+
+        [HttpGet("GetById")]
+        public IActionResult GetManagersById(string id)
+        {
+            var response = _managerService.GetManagerById(id);
+            return Ok(response);
+        }
+
+        [HttpPut("Edit")]
+        public IActionResult EditManager(string id, EditManagerDto managerDTO)
+        {
+            var response = _managerService.EditManager(id, managerDTO);
+            return Ok(response);
+        }
+        [HttpGet("GetAll")]
+        public IActionResult GetAllManage(int page, int perPage)
+        {
+            var response = _managerService.GetAllManagerByPagination(page, perPage);
+            return Ok(response);
+        }
+
+        [HttpPost("sendManagerInformation")]
+        public async Task<IActionResult> SendManagerInformation(ManagerInfoCreateDto managerInfoCreateDto)
+        {
+
+            var response = await _managerService.SendManagerInformationToAdminAsync(managerInfoCreateDto);
+
+            return Ok(response);
+        }
     }
 }
