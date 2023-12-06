@@ -30,5 +30,15 @@ namespace TicketEase.Controllers
 
         [HttpGet("{projectId}")]
         public async Task<IActionResult> GetProjectById(string projectId) => Ok(await _projectServices.GetProjectByIdAsync(projectId));
+
+        [HttpGet("GetProjectsByBoardId")]
+        public async Task<IActionResult> GetProjectsByBoardId(string boardId, int perPage, int page)
+            => Ok(await _projectServices.GetProjectsByBoardIdAsync(boardId, perPage, page));
+
+        [HttpDelete("DeleteProject")]
+        public IActionResult DeleteBoard()
+        {
+            return Ok(_projectServices.DeleteAllProjects());
+        }
     }
 }
