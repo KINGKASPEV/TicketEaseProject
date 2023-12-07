@@ -147,5 +147,15 @@ namespace TicketEase.Controllers
                 return BadRequest(new ApiResponse<string>(false, response.Message, response.StatusCode, null, response.Errors));
             }
         }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+            return Ok(new ApiResponse<string>(true, "Logout successful", 200, null, new List<string>()));
+        }
     }
 }
