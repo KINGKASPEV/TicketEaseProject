@@ -56,5 +56,31 @@ namespace TicketEase.Controllers
 
             return Ok(response);
         }
+
+        [HttpPut("updateManager/{managerId}")]
+        public async Task<IActionResult> UpdateManagerProfile(string managerId, [FromForm] UpdateManagerDto updateManagerDto)
+        {
+            var result = await _managerService.UpdateManagerProfileAsync(managerId, updateManagerDto);
+            return Ok(new ApiResponse<bool>(true, "User updated successfully.", 200, true, null));
+
+
+        }
+
+        [HttpGet("GetManagerDetails/{managerId}")]
+        public async Task<IActionResult> GetManagerDetails(string managerId)
+        {
+            var boards = await _managerService.GetBoardsByManagerId(managerId);
+            var projects = await _projectService.GetProjectsFromBoards(boards);
+            var tickets = await _projectService.GetTicketsFromProjects(projects);
+
+            var managerDetails = new
+            {
+                Boards = boards.Count,
+                Projects = projects.Count,
+                Tickets = tickets.Count
+            };
+
+            return Ok(managerDetails);
+        }
     }
 }
