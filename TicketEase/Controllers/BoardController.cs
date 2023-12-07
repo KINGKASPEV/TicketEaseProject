@@ -35,5 +35,27 @@ namespace TicketEase.Controllers
         {
             return Ok(await _boardServices.GetBoardByIdAsync(id));
         }
+
+        [HttpGet("get-all-board-by-pagination")]
+        public async Task<IActionResult> GetAllBoards([FromQuery] int page, [FromQuery] int perPage)
+        {
+            try
+            {
+                var result = await _boardServices.GetAllBoardsAsync(perPage, page);
+
+                if (result.Succeeded)
+                {
+                    return Ok(result.Data);
+                }
+                else
+                {
+                    return StatusCode(result.StatusCode, new { Message = result.Message, Errors = result.Errors });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Internal Server Error", Errors = new[] { ex.Message } });
+            }
+        }
     }
 }
