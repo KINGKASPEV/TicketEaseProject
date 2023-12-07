@@ -106,5 +106,46 @@ namespace TicketEase.Controllers
                 return BadRequest(new ApiResponse<string>(false, response.Message, response.StatusCode, null, response.Errors));
             }
         }
+
+        [HttpPost("update-password")]
+        public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordDto model, [FromHeader(Name = "Authorization")] string authToken)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new ApiResponse<string>(false, "Invalid model state.", 400, null, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()));
+            }
+
+            if (string.IsNullOrWhiteSpace(authToken))
+            {
+                return Unauthorized(new ApiResponse<string>(false, "Authorization token is missing.", 401, null, new List<string>()));
+            }
+
+            var userIdResponse = _authenticationService.ExtractUserIdFromToken(authToken);
+
+            if (!userIdResponse.Succeeded)
+            {
+                return Unauthorized(userIdResponse);
+            }
+
+            var userId = userIdResponse.Data;
+
+            var user = await _userManager.FindByEmailAsync(userId);
+
+            if (user == null)
+            {
+                return Unauthorized(new ApiResponse<string>(false, "User not found.", 401, null, new List<string>()));
+            }
+
+            var response = await _authenticationService.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+            if (response.Succeeded)
+            {
+                return Ok(new ApiResponse<string>(true, response.Message, response.StatusCode, null, new List<string>()));
+            }
+            else
+            {
+                return BadRequest(new ApiResponse<string>(false, response.Message, response.StatusCode, null, response.Errors));
+            }
+        }
     }
 }
