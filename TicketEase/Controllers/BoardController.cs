@@ -57,5 +57,17 @@ namespace TicketEase.Controllers
                 return StatusCode(500, new { Message = "Internal Server Error", Errors = new[] { ex.Message } });
             }
         }
+
+        [HttpDelete("DeleteBoard")]
+        public IActionResult DeleteBoard()
+        {
+            return Ok(_boardServices.DeleteAllBoards());
+        }
+
+        [HttpDelete("DeleteBoardById")]
+        public async Task<IActionResult> DeleteBoardById(string boardId)
+        {
+            return Ok(await _boardServices.DeleteBoardAsync(boardId));
+        }
     }
 }
