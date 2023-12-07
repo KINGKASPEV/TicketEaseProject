@@ -26,7 +26,7 @@ namespace TicketEase.Persistence.Extensions
 			services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 			services.AddScoped<IProjectServices, ProjectServices>();
-			//services.AddScoped<IBoardServices, BoardServices>();
+			services.AddScoped<IBoardServices, BoardServices>();
 			services.AddScoped<ITicketService, TicketService>();
 			services.AddScoped<ITicketRepository, TicketRepository>();
 			services.AddScoped<ICommentRepository, CommentRepository>();
